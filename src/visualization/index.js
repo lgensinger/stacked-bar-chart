@@ -12,14 +12,15 @@ import { configuration, configurationDimension } from "../configuration.js";
  * @param {integer} width - artboard width
  */
 class StackedBarChart {
-    constructor(data, width=configurationDimension.width, height=configurationDimension.height, includeValueInLabel=true) {
+    constructor(data, width=configurationDimension.width, height=configurationDimension.height, name=configuration.name, includeValueInLabel=true) {
 
         // update self
         this.artboard = null;
         this.barWidth = null;
+        this.container = null;
         this.dataSource = data;
         this.height = height;
-        this.name = configuration.name;
+        this.name = name;
         this.width = width;
 
         // using font size as the base unit of measure make responsiveness easier to manage across devices
@@ -80,8 +81,11 @@ class StackedBarChart {
         this.series
             .selectAll("rect")
             .data(d => this.layout([this.data[d]]))
-            .enter()
-            .append("rect")
+            .join(
+                enter => enter.append("rect"),
+                update => update,
+                exit => exit.remove()
+            )
             .attr("class", d => `lgv-bar ${d.key}`)
             .attr("x", d => this.seriesScale(d[0][0]))
             .attr("y", d => 0)
@@ -91,13 +95,19 @@ class StackedBarChart {
 
     /**
      * Generate SVG artboard in the HTML DOM.
-     * @param {node} domNode - HTML node
+     * @param {selection} domNode - d3 selection
      * @returns A d3.js selection.
      */
     generateArtboard(domNode) {
-        return select(domNode)
-            .append("svg")
-            .attr("viewBox", `0 0 ${this.width} ${this.height}`)
+        return domNode
+            .selectAll("svg")
+            .data([{height: this.height, width: this.width}])
+            .join(
+                enter => enter.append("svg"),
+                update => update,
+                exit => exit.remove()
+            )
+            .attr("viewBox", d => `0 0 ${d.width} ${d.height}`)
             .attr("class", this.name);
     }
 
@@ -107,10 +117,31 @@ class StackedBarChart {
      * @returns A d3.js selection.
      */
     generateBars(domNode) {
-        return domNode.selectAll("g")
+        return domNode
+            .selectAll("g")
             .data(Object.keys(this.data))
-            .join("g")
+            .join(
+                enter => enter.append("g"),
+                update => update,
+                exit => exit.remove()
+            )
             .attr("transform", d => `translate(0,${this.seriesSetsScale(d)})`);
+    }
+
+    /**
+     * Generate visualization.
+     */
+    generateVisualization() {
+
+        // generate svg artboard
+        this.artboard = this.generateArtboard(this.container);
+
+        // generate group for each series
+        this.series = this.generateBars(this.artboard);
+
+        // position/style nodes
+        this.configureBars();
+
     }
 
     /**
@@ -119,14 +150,29 @@ class StackedBarChart {
      */
     render(domNode) {
 
-        // generate svg artboard
-        this.artboard = this.generateArtboard(domNode);
+        // update self
+        this.container = select(domNode);
 
-        // generate group for each series
-        this.series = this.generateBars(this.artboard);
+        // generate visualization
+        this.generateVisualization();
 
-        // position/style nodes
-        this.configureBars();
+    }
+
+    /**
+     * Update visualization.
+     * @param {object} data - key/values where each key is a series label and corresponding value is an array of values
+     * @param {integer} height - height of artboard
+     * @param {integer} width - width of artboard
+     */
+    update(data, width, height) {
+
+        // update self
+        this.dataSource = data;
+        this.height = height;
+        this.width = width;
+
+        // generate visualization
+        this.generateVisualization();
 
     }
 
