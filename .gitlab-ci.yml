@@ -12,8 +12,8 @@ include:
     file: "node/module/test.yml"
 
   # coverage
-  #- project: "lgensinger/cicd-templates"
-  #  file: "python/package/coverage.yml"
+  - project: "lgensinger/cicd-templates"
+    file: "node/module/coverage.yml"
 
   ######################################  VERSIONING  ######################################
 
