@@ -39,9 +39,50 @@ The following values are the expected input data structure.
 ```bash
 import { StackedBarChart } from "@lgv/stacked-bar-chart";
 
+// have some data 
+let data = {
+    "someKey": { "a": 445, "b": 4, "c": 10 },
+    "someKey2": { "a": 300, "b": 200, "c": 5 }
+};
+
 // initialize
 const sbc = new StackedBarChart(data);
 
 // render visualization
 sbc.render(document.body);
+```
+
+## Actively Develop
+
+```bash
+# clone repository
+git clone git@gitlab.com:lgensinger/stacked-bar-chart.git
+
+# update directory context
+cd stacked-bar-chart
+
+# run docker container
+docker run \
+  --rm \
+  -it  \
+  -v $(pwd):/project \
+  -w /project \
+  -p 8080:8080 \
+  node \
+  bash
+
+# FROM INSIDE RUNNING CONTAINER
+
+# install module
+npm install .
+
+# run development server
+npm run startdocker
+
+# edit src/index.js
+# add const sbc = new StackedBarChart(data);
+# add sbc.render(document.body);
+# replace `data` with whatever data you want to develop with
+
+# view visualization in browser at http://localhost:8080
 ```

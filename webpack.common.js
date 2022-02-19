@@ -2,23 +2,17 @@ import path from "path";
 import { dirname } from "path";
 import { fileURLToPath } from "url";
 
-import HtmlWebpackPlugin from "html-webpack-plugin";
 import webpack from "webpack";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
-const webpackConfig = {
-
-    mode: "development",
+const commonConfig = {
 
     entry: {
         index: "./src/index.js"
     },
 
     plugins: [
-        new HtmlWebpackPlugin({
-            title: "Development",
-        }),
         new webpack.DefinePlugin({
             "process.env": {
                 "DIMENSION_HEIGHT": JSON.stringify(process.DIMENSION_HEIGHT),
@@ -30,12 +24,12 @@ const webpackConfig = {
     ],
 
     output: {
-        filename: "[name].bundle.js",
+        filename: "stacked-bar-chart.bundle.js",
         path: path.resolve(__dirname, "dist"),
         clean: true
     }
 
  };
 
- export { webpackConfig };
- export default webpackConfig;
+ export { commonConfig };
+ export default commonConfig;
