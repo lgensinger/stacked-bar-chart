@@ -1,7 +1,7 @@
-import package from "../package.json" assert { type: "json" };
+import packagejson from "../package.json" assert { type: "json" };
 
 const configuration = {
-    name: package.name.replace("/", "-").slice(1)
+    name: packagejson.name.replace("/", "-").slice(1)
 };
 
 const configurationDimension = {
