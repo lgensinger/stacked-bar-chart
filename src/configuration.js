@@ -1,4 +1,4 @@
-import { name } from "../package.json";
+import { name } from "../package.json" assert { type: "json" };
 
 const configuration = {
     name: name.replace("/", "-").slice(1)
