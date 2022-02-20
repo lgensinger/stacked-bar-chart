@@ -1,7 +1,7 @@
 stages:
   - test
   #- version
-  #- publish
+  - publish
 
 include:
   ######################################  TESTING  ######################################
@@ -23,6 +23,6 @@ include:
 
   ######################################  PUBLISHING  ######################################
 
-  # pypi
-  #- project: "lgensinger/cicd-templates"
-  #  file: "python/package/publish.yml"
+  # npm
+  - project: "lgensinger/cicd-templates"
+    file: "node/module/publish.yml"

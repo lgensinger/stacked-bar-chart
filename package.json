@@ -19,6 +19,9 @@
     "type": "git",
     "url": "https://gitlab.com/lgensinger/stacked-bar-chart.git"
   },
+  "publishConfig": {
+    "@lgv:registry": "https://registry.npmjs.org"
+  },
   "keywords": [
     "visualization",
     "d3"
