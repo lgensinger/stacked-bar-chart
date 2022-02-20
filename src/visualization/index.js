@@ -130,8 +130,9 @@ class StackedBarChart {
 
     /**
      * Generate visualization.
+     * @param {styles} object - key/value pairs where each key is a CSS property and corresponding value is its value
      */
-    generateVisualization() {
+    generateVisualization(styles) {
 
         // generate svg artboard
         this.artboard = this.generateArtboard(this.container);
@@ -139,22 +140,43 @@ class StackedBarChart {
         // generate group for each series
         this.series = this.generateBars(this.artboard);
 
-        // position/style nodes
+        // position/minimally style nodes for core render
         this.configureBars();
+
+        // style bars from provided
+        this.styleBars(styles);
 
     }
 
     /**
      * Render visualization.
      * @param {node} domNode - HTML node
+     * @param {styles} object - key/value pairs where each key is a CSS property and corresponding value is its value
      */
-    render(domNode) {
+    render(domNode, styles) {
 
         // update self
         this.container = select(domNode);
 
         // generate visualization
-        this.generateVisualization();
+        this.generateVisualization(styles);
+
+    }
+
+    /**
+     * Style bars in SVG dom element.
+     */
+    styleBars(styles = null) {
+
+        // check if provided
+        if (styles) {
+
+            // add each declared style 
+            for (const key in styles) {
+                this.series.attr(key, styles[key]);
+            }
+
+        }
 
     }
 
@@ -163,8 +185,9 @@ class StackedBarChart {
      * @param {object} data - key/values where each key is a series label and corresponding value is an array of values
      * @param {integer} height - height of artboard
      * @param {integer} width - width of artboard
+     * @param {styles} object - key/value pairs where each key is a CSS property and corresponding value is its value
      */
-    update(data, width, height) {
+    update(data, width, height, styles) {
 
         // update self
         this.dataSource = data;
@@ -172,7 +195,7 @@ class StackedBarChart {
         this.width = width;
 
         // generate visualization
-        this.generateVisualization();
+        this.generateVisualization(styles);
 
     }
 
