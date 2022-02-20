@@ -10,7 +10,7 @@
   },
   "scripts": {
     "build": "webpack build --config webpack.prod.js",
-    "coverage": "cross-env 'NODE_OPTIONS=--experimental-loader @istanbuljs/esm-loader-hook' nyc npm run test",
+    "coverage": "nyc npm run test",
     "start": "webpack serve --config webpack.dev.js",
     "startdocker": "webpack serve --config webpack.dev.js --host 0.0.0.0 --public 0.0.0.0",
     "test": "npx ava --verbose"
