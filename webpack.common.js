@@ -16,9 +16,7 @@ const commonConfig = {
         new webpack.DefinePlugin({
             "process.env": {
                 "DIMENSION_HEIGHT": JSON.stringify(process.DIMENSION_HEIGHT),
-                "DIMENSION_WIDTH": JSON.stringify(process.DIMENSION_WIDTH),
-                "LAYOUT_PADDING_STACK_CELL": JSON.stringify(process.LAYOUT_PADDING_STACK_CELL),
-                "LAYOUT_PADDING_STACK_TEXT": JSON.stringify(process.LAYOUT_PADDING_STACK_TEXT)
+                "DIMENSION_WIDTH": JSON.stringify(process.DIMENSION_WIDTH)
             }
         })
     ],

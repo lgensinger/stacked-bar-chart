@@ -4,7 +4,14 @@ import { merge } from "webpack-merge";
 
 const webpackConfig = merge(commonConfig, {
 
-    mode: "production"
+    mode: "production",
+
+    output: {
+        library: {
+            name: "StackedBarChart",
+            type: "umd"
+        }
+    }
 
 });
 
