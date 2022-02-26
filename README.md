@@ -17,7 +17,7 @@ The following values are the expected input data structure.
 {
     "someKey": { "a": 445, "b": 4, "c": 10 },
     "someKey2": { "a": 300, "b": 200, "c": 5 }
-};
+}
 ```
 
 ## Use Module
@@ -60,7 +60,7 @@ Style is expected to be addressed via css. Any style not met by the visualizatio
 
 ```bash
 # clone repository
-git clone git@gitlab.com:lgensinger/stacked-bar-chart.git
+git clone <repo_url>
 
 # update directory context
 cd stacked-bar-chart
